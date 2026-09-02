@@ -1,0 +1,15 @@
+{
+  "attack": "path4-data-exfil",
+  "timestamp": "2026-09-02T07:14:26.023910+00:00",
+  "operating_as": "arn:aws:sts::000000000000:assumed-role/cloudfracture-agent-exec-role/cf-exfil",
+  "bucket": "cloudfracture-sensitive-data-000000000000",
+  "objects": [
+    {
+      "key": "customers.csv",
+      "bytes": 224
+    }
+  ],
+  "total_bytes": 224,
+  "preview": "id,name,email,plan,mrr\n1,Ada Lovelace,ada@example.invalid,enterprise,4200\n2,Alan Turing,alan@example.invalid,pro,890\n3,Grace Hopper,grace@example.invalid,pro,890",
+  "exfil_succeeded": true
+}

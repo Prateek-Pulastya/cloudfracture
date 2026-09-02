@@ -1,0 +1,30 @@
+title: Write to Agent Prompt Store (Persisted Prompt Injection)
+id: 8f2b1c30-0a11-4e2a-9c11-cf0100000002
+status: experimental
+description: >
+  Detects the agent execution role writing an object to the prompt-store bucket
+  it reads its own system prompt from (CloudFracture Path 2). The agent should only
+  READ the prompt store; a PutObject by the agent role is persisted prompt injection.
+references:
+  - https://genai.owasp.org/llmrisk/llm01-prompt-injection/
+  - https://attack.mitre.org/techniques/T1565/
+author: CloudFracture
+date: 2026/09/01
+logsource:
+  product: aws
+  service: cloudtrail
+detection:
+  selection:
+    eventSource: s3.amazonaws.com
+    eventName: PutObject
+    requestParameters.bucketName|startswith: 'cloudfracture-prompt-store'
+    userIdentity.sessionContext.sessionIssuer.userName: 'cloudfracture-agent-exec-role'
+  condition: selection
+falsepositives:
+  - A legitimate write path that reuses the agent role (an anti-pattern this rule
+    is meant to surface). Requires S3 data events enabled on the bucket.
+level: high
+tags:
+  - attack.persistence
+  - attack.t1565
+  - owasp.llm01

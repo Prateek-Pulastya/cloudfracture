@@ -1,0 +1,26 @@
+{
+  "attack": "path1-passrole-privesc",
+  "timestamp": "2026-09-02T07:14:06.675072+00:00",
+  "agent_role": "arn:aws:iam::000000000000:role/cloudfracture-agent-exec-role",
+  "privileged_role": "arn:aws:iam::000000000000:role/cloudfracture-privileged-role",
+  "steps": {
+    "A_agent_direct_iam": "DENIED as expected (AccessDenied)",
+    "B_create_function": "SUCCESS (agent passed privileged-role to a new Lambda)",
+    "C_invoke_result": {
+      "running_as": "arn:aws:sts::000000000000:assumed-role/cloudfracture-privileged-role/cloudfracture-privesc-poc",
+      "account": "000000000000",
+      "iam_listroles_worked": true,
+      "role_count": 5,
+      "sample_roles": [
+        "AWSServiceRoleForResourceExplorer",
+        "AWSServiceRoleForSupport",
+        "AWSServiceRoleForTrustedAdvisor",
+        "cloudfracture-agent-exec-role",
+        "cloudfracture-privileged-role"
+      ]
+    },
+    "cleanup": "operator (admin) deleted PoC lambda"
+  },
+  "operating_as": "arn:aws:sts::000000000000:assumed-role/cloudfracture-agent-exec-role/cf-attacker",
+  "escalation_proven": true
+}

@@ -1,0 +1,91 @@
+{
+  "eventVersion": "1.11",
+  "userIdentity": {
+    "type": "AssumedRole",
+    "principalId": "AROAEXAMPLE0A7UUZ7X4X:cf-attacker",
+    "arn": "arn:aws:sts::000000000000:assumed-role/cloudfracture-agent-exec-role/cf-attacker",
+    "accountId": "000000000000",
+    "accessKeyId": "ASIAEXAMPLE0GSC2DRBL",
+    "sessionContext": {
+      "sessionIssuer": {
+        "type": "Role",
+        "principalId": "AROAEXAMPLE0A7UUZ7X4X",
+        "arn": "arn:aws:iam::000000000000:role/cloudfracture-agent-exec-role",
+        "accountId": "000000000000",
+        "userName": "cloudfracture-agent-exec-role"
+      },
+      "attributes": {
+        "creationDate": "2026-09-02T07:07:39Z",
+        "mfaAuthenticated": "false"
+      }
+    }
+  },
+  "eventTime": "2026-09-02T07:07:41Z",
+  "eventSource": "lambda.amazonaws.com",
+  "eventName": "CreateFunction20150331",
+  "awsRegion": "eu-central-1",
+  "sourceIPAddress": "91.65.67.67",
+  "userAgent": "Boto3/1.43.85 md/Botocore#1.43.85 ua/2.1 os/windows#10 md/arch#amd64 lang/python#3.10.11 md/pyimpl#CPython m/Z,e,b,D cfg/retry-mode#legacy Botocore/1.43.85",
+  "requestParameters": {
+    "functionName": "cloudfracture-privesc-poc",
+    "runtime": "python3.12",
+    "role": "arn:aws:iam::000000000000:role/cloudfracture-worker-role",
+    "handler": "lambda_function.lambda_handler",
+    "code": {},
+    "timeout": 30,
+    "publish": true,
+    "environment": {}
+  },
+  "responseElements": {
+    "functionName": "cloudfracture-privesc-poc",
+    "functionArn": "arn:aws:lambda:eu-central-1:000000000000:function:cloudfracture-privesc-poc",
+    "runtime": "python3.12",
+    "role": "arn:aws:iam::000000000000:role/cloudfracture-privileged-role",
+    "handler": "lambda_function.lambda_handler",
+    "codeSize": 382,
+    "description": "",
+    "timeout": 30,
+    "memorySize": 128,
+    "lastModified": "2026-09-02T07:07:41.288+0000",
+    "codeSha256": "8COcx9x/GDXYzkg2YCVHyBqqyV8ddkoyBprRU9bhy/c=",
+    "version": "2",
+    "environment": {},
+    "tracingConfig": {
+      "mode": "PassThrough"
+    },
+    "revisionId": "8c32d275-124f-4a1a-ae29-3514af1b4c86",
+    "state": "Pending",
+    "stateReason": "The function is being created.",
+    "stateReasonCode": "Creating",
+    "packageType": "Zip",
+    "architectures": [
+      "x86_64"
+    ],
+    "ephemeralStorage": {
+      "size": 512
+    },
+    "snapStart": {
+      "applyOn": "None",
+      "optimizationStatus": "Off"
+    },
+    "runtimeVersionConfig": {
+      "runtimeVersionArn": "arn:aws:lambda:eu-central-1::runtime:c1ab740f3656a72d7917665a940f8634df245489445f5a660de5a634d06c5433"
+    },
+    "loggingConfig": {
+      "logFormat": "Text",
+      "logGroup": "/aws/lambda/cloudfracture-privesc-poc"
+    }
+  },
+  "requestID": "cc4e5462-896c-40cd-9133-3136c4f01b3b",
+  "eventID": "921d5074-55b7-48f8-8b8e-4638ded697bc",
+  "readOnly": false,
+  "eventType": "AwsApiCall",
+  "managementEvent": true,
+  "recipientAccountId": "000000000000",
+  "eventCategory": "Management",
+  "tlsDetails": {
+    "tlsVersion": "TLSv1.3",
+    "cipherSuite": "TLS_AES_128_GCM_SHA256",
+    "clientProvidedHostHeader": "lambda.eu-central-1.amazonaws.com"
+  }
+}

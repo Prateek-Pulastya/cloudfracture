@@ -1,0 +1,21 @@
+title = "CloudFracture gitleaks config"
+
+# Use Gitleaks' full default ruleset...
+[extend]
+useDefault = true
+
+# ...but allowlist the SYNTHETIC lab values. These look like secrets on purpose
+# (the project is about credential theft) but are not real and never were.
+[allowlist]
+description = "Synthetic lab values and evidence artifacts — not real secrets"
+regexes = [
+  '''REDACTED-LAB-VALUE-not-a-real-secret''',
+  '''S3cr3t-Lab-Cred-42''',
+  '''hunter2-CHANGEME''',
+]
+paths = [
+  '''attacks/evidence/.*''',
+  '''detections/fixtures/.*''',
+  '''docs/media/.*''',
+  '''experiments/.*''',
+]

@@ -1,0 +1,41 @@
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraform.lock.hcl
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Experiment output (raw run data — keep RESULTS.md, ignore the dumps)
+experiments/**/results.json
+
+# AWS / secrets — never commit
+.aws/
+*.pem
+*.key
+credentials
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# raw CloudTrail dumps: full of real account detail — keep local, do not publish
+detections/fixtures/raw/
+
+# Claude Code local settings (per-machine)
+.claude/settings.local.json

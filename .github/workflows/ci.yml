@@ -1,0 +1,97 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  # -- Detection-as-code: execute every Sigma rule against its fire/no-fire
+  #    fixtures; fail if any rule stops catching its attack or fires on benign.
+  detection-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r detections/requirements.txt
+      - run: python detections/run_detections.py
+
+  # -- SAST: static analysis of the Python (agent runtime + tooling).
+  sast-semgrep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install semgrep
+      - name: Semgrep (error severity)
+        run: semgrep scan --config p/python --config p/secrets --severity ERROR --error
+          agent/ tools/ detections/ remediation/ attacks/scripts/
+
+  # -- SCA: known-vulnerable dependency check on the pinned requirements.
+  sca-pip-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pip-audit
+      - run: pip-audit -r agent/requirements.txt -r detections/requirements.txt
+        continue-on-error: true   # advisory: transitive CVEs shouldn't block the lab
+
+  # -- Secret scanning: catch any credential accidentally committed.
+  secret-scan-gitleaks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_CONFIG: .gitleaks.toml
+
+  # -- IaC scanning (enforced): Checkov on the Terraform, with documented,
+  #    justified suppressions for the intentional flaws (.checkov.yaml).
+  iac-checkov:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: terraform
+          config_file: .checkov.yaml
+          quiet: true
+
+  # -- IaC scanning (advisory): tfsec as a second opinion. Soft-fail so it informs
+  #    without duplicating the Checkov suppression list; Checkov is the gate.
+  iac-tfsec:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aquasecurity/tfsec-action@v1.0.3
+        with:
+          working_directory: terraform
+          soft_fail: true
+
+  # -- SBOM: generate a CycloneDX software bill of materials and publish it.
+  sbom-syft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: anchore/sbom-action@v0
+        with:
+          path: .
+          format: cyclonedx-json
+          output-file: sbom/cloudfracture.cdx.json
+          artifact-name: cloudfracture-sbom
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cloudfracture-sbom
+          path: sbom/cloudfracture.cdx.json

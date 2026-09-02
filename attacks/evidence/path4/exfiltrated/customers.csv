@@ -1,0 +1,5 @@
+id,name,email,plan,mrr
+1,Ada Lovelace,ada@example.invalid,enterprise,4200
+2,Alan Turing,alan@example.invalid,pro,890
+3,Grace Hopper,grace@example.invalid,pro,890
+4,Katherine Johnson,katherine@example.invalid,enterprise,5100

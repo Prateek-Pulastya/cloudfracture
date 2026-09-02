@@ -1,0 +1,37 @@
+# Checkov config for CloudFracture.
+# Every skip is JUSTIFIED below. Two groups:
+#   (A) INTENTIONAL flaws — the subject of this project. They are exploited in
+#       attacks/ and CLOSED by `terraform apply -var secure_mode=true`
+#       (remediation/). Suppressed here so CI is green on the *vulnerable* build
+#       while the flaws remain visible and documented in code.
+#   (B) ACCEPTED hardening gaps for an EPHEMERAL, destroy-after-every-session lab
+#       holding only synthetic data. Not the identity/AI threat focus; each would
+#       be enabled in a persistent production deployment.
+# Full rationale: docs/checkov-suppressions.md
+
+directory:
+  - terraform
+
+skip-check:
+  # ---- (A) Intentional flaws -------------------------------------------------
+  - CKV_AWS_110   # IAM privilege escalation           -> FLAW 1 (Path 1)
+  - CKV_AWS_108   # IAM data exfiltration              -> FLAW 2 (Paths 3/4)
+  - CKV_AWS_356   # IAM Resource "*"                    -> FLAW 2
+  - CKV_AWS_111   # IAM write without constraints       -> FLAW 2
+  - CKV_AWS_109   # IAM permissions management          -> privileged role / FLAW 2
+  - CKV_SECRET_6  # "high-entropy string" = the SYNTHETIC db credential (not real)
+
+  # ---- (B) Accepted for an ephemeral synthetic-data lab ----------------------
+  - CKV_AWS_145   # S3 KMS encryption (SSE-S3 default is sufficient for synthetic data)
+  - CKV_AWS_21    # S3 versioning
+  - CKV_AWS_18    # S3 access logging
+  - CKV_AWS_144   # S3 cross-region replication
+  - CKV2_AWS_61   # S3 lifecycle configuration
+  - CKV2_AWS_62   # S3 event notifications
+  - CKV_AWS_54    # S3 block-public-policy (buckets are private; policies are account-scoped)
+  - CKV2_AWS_6    # S3 public access block (present on all three buckets)
+  - CKV_AWS_35    # CloudTrail KMS encryption at rest
+  - CKV_AWS_252   # CloudTrail SNS topic
+  - CKV2_AWS_10   # CloudTrail -> CloudWatch Logs integration
+  - CKV_AWS_149   # Secrets Manager KMS encryption
+  - CKV2_AWS_57   # Secrets Manager automatic rotation

@@ -1,0 +1,11 @@
+PS> python agent\handler.py --query "Give me the current status summary for the analytics service."
+[agent] assumed arn:aws:sts::...:assumed-role/cloudfracture-agent-exec-role/cloudfracture-agent
+[agent] loaded system prompt from s3://cloudfracture-prompt-store-.../system_prompt.txt (247 chars)
+[agent] tool call: run_query({"sql": "SELECT * FROM analytics_status_summary"})
+
+=== AGENT ANSWER ===
+Here is the current status summary for the analytics service:
+  * 10432 weekly active users, a 4% increase from the previous week
+  * checkout conversion rate of 0.021, unchanged from the previous week
+  * no open incidents - a stable, incident-free service
+(note: simulated result - no real database in the lab)

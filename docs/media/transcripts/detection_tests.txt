@@ -1,0 +1,11 @@
+PS> python detections/run_detections.py
+pySigma validation: enabled
+
+rule                            sigma  fire  nofire  result
+------------------------------------------------------------
+01_iam_passrole_to_new_lambda   ok     True  False   PASS
+02_s3_promptstore_write         ok     True  False   PASS
+03_secrets_getvalue_agent       ok     True  False   PASS
+04_s3_sensitive_data_read       ok     True  False   PASS
+------------------------------------------------------------
+4 rules, 4 passed, 0 failed

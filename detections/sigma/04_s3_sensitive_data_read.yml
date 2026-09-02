@@ -1,0 +1,29 @@
+title: Agent Reads Sensitive Data Bucket (Exfiltration)
+id: 8f2b1c30-0a11-4e2a-9c11-cf0100000004
+status: experimental
+description: >
+  Detects the agent execution role reading objects from the sensitive-data bucket
+  (CloudFracture Path 4). The agent has no legitimate need to read this bucket;
+  object reads by the agent role indicate data exfiltration.
+references:
+  - https://attack.mitre.org/techniques/T1530/
+author: CloudFracture
+date: 2026/09/01
+logsource:
+  product: aws
+  service: cloudtrail
+detection:
+  selection:
+    eventSource: s3.amazonaws.com
+    eventName: GetObject
+    requestParameters.bucketName|startswith: 'cloudfracture-sensitive-data'
+    userIdentity.sessionContext.sessionIssuer.userName: 'cloudfracture-agent-exec-role'
+  condition: selection
+falsepositives:
+  - A legitimate analytics job running under the agent role that genuinely needs
+    this data (should use a separate, scoped role). Requires S3 data events.
+level: high
+tags:
+  - attack.exfiltration
+  - attack.t1530
+  - attack.ta0010

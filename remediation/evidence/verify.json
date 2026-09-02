@@ -1,0 +1,23 @@
+{
+  "timestamp": "2026-09-02T12:00:26.180232+00:00",
+  "operating_as": "arn:aws:sts::000000000000:assumed-role/cloudfracture-agent-exec-role/cf-verify",
+  "results": {
+    "Path 1 \u2014 PassRole+CreateFunction": {
+      "blocked": true,
+      "detail": "AccessDeniedException"
+    },
+    "Path 2 \u2014 write to prompt store": {
+      "blocked": true,
+      "detail": "AccessDenied"
+    },
+    "Path 3 \u2014 read DB secret": {
+      "blocked": true,
+      "detail": "AccessDeniedException"
+    },
+    "Path 4 \u2014 read sensitive bucket": {
+      "blocked": true,
+      "detail": "AccessDenied"
+    }
+  },
+  "benign_read_prompt": "OK (agent can still read its prompt)"
+}

@@ -1,0 +1,14 @@
+PS> terraform apply -var secure_mode=true      # least-privilege build
+PS> python remediation/verify_remediation.py
+[*] operating as: assumed-role/cloudfracture-agent-exec-role/cf-verify
+
+attack                                blocked?  detail
+----------------------------------------------------------------------
+Path 1 - PassRole+CreateFunction      YES       AccessDeniedException
+Path 2 - write to prompt store        YES       AccessDenied
+Path 3 - read DB secret               YES       AccessDeniedException
+Path 4 - read sensitive bucket        YES       AccessDenied
+----------------------------------------------------------------------
+benign - read own prompt                        OK (agent can still read its prompt)
+
+[+] remediation verified: ALL 4 attacks blocked, workload intact

