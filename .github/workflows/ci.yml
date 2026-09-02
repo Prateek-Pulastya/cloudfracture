@@ -90,8 +90,5 @@ jobs:
           path: .
           format: cyclonedx-json
           output-file: sbom/cloudfracture.cdx.json
-          artifact-name: cloudfracture-sbom
-      - uses: actions/upload-artifact@v4
-        with:
-          name: cloudfracture-sbom
-          path: sbom/cloudfracture.cdx.json
+          artifact-name: cloudfracture-sbom.cdx.json
+          # sbom-action uploads the artifact itself; no separate upload step needed.
