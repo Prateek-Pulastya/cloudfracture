@@ -19,6 +19,14 @@ pipeline. Every attack is real and reproducible; every claim has evidence.
 
 ---
 
+## 🎬 20-second demo
+
+[![Watch the CloudFracture demo](docs/media/brag_poster.jpg)](https://github.com/Prateek-Pulastya/cloudfracture/raw/main/docs/media/brag.mp4)
+
+▶️ **[Watch the 20-second demo](https://github.com/Prateek-Pulastya/cloudfracture/raw/main/docs/media/brag.mp4)** — build → attack → detect → remediate. (Click the poster to play.)
+
+---
+
 ## The whole project in one loop
 
 ![CloudFracture pipeline: build → attack → log → detect → remediate](docs/media/project_flow.gif)
