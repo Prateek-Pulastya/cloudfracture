@@ -1,5 +1,7 @@
 # CloudFracture
 
+[![CI](https://github.com/Prateek-Pulastya/cloudfracture/actions/workflows/ci.yml/badge.svg)](https://github.com/Prateek-Pulastya/cloudfracture/actions/workflows/ci.yml)
+
 **Attacking and detecting identity abuse in AWS AI workloads.**
 
 A deliberately vulnerable LLM-agent workload on AWS, built as code — then
